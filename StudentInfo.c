@@ -33,17 +33,26 @@ int quit(studentLink **head);
 
 
 int main(){
-	
+
     char ch='^';
     studentLink *dataBase=NULL;//数据链表头结点，可以当做数据库的名称
-    printf ( "a.新建数据档案\n" );
-	printf ( "b.添加数据\n" );
-	printf ( "c.删除数据\n" );
-	printf ( "d.对输入的数据进行查询\n" );
-	printf ( "e.退出\n" );    
-	
+    
+
     while(ch!='$'){
         char c=0;
+		printf ( "=============================\n" );
+		if(dataBase==NULL){
+			printf ( "a.新建数据档案\n" );
+		}else{
+			printf ( "b.添加数据\n" );
+			printf ( "c.删除数据\n" );
+			printf ( "d.对输入的数据进行查询\n" );
+			printf ( "e.清除数据库\n" );
+			printf ( "q.退出程序\n" );
+		}
+		printf ( "\n=============================\n" );
+		
+		
 	    printf ("\n请输入选项：");
         scanf("%c",&c);
 		switch(c){
@@ -58,7 +67,9 @@ int main(){
 			case 'e':
 				quit(&dataBase);break;
 			case 'f':
-                printList(&dataBase);break;
+                printList(&dataBase);system("pause");break;
+			case 'q':
+				quit(&dataBase);exit(0);break;
 			default :
                 printf("Invalid Input\n");break;
 		}
