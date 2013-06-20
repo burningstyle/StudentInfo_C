@@ -1,4 +1,5 @@
 #include "stdio.h"
+#include "string.h"
 #include "malloc.h"
 #include "stdlib.h"
 
@@ -29,7 +30,8 @@ int deleteRecord(studentLink **head);
 int selectRecord(studentLink **head);
 int printList(studentLink **head);
 int quit(studentLink **head);
-
+int printStudentInfo(studentInfo elem);
+int inputStudentInfo(studentInfo *elem);
 
 
 int main(){
@@ -46,7 +48,7 @@ int main(){
 		}else{
 			printf ( "b.添加数据\n" );
 			printf ( "c.删除数据\n" );
-			printf ( "d.对输入的数据进行查询\n" );
+			printf ( "d.数据查询\n" );
 			printf ( "e.清除数据库\n" );
 			printf ( "q.退出程序\n" );
 		}
@@ -54,8 +56,8 @@ int main(){
 		
 		
 	    printf ("\n请输入选项：");
-        scanf("%c",&c);
-		switch(c){
+        scanf("%c",&ch);
+		switch(ch){
 			case 'a':
                 dataBase=newDataBase();break;//显示输入示例
 			case 'b':
@@ -67,13 +69,13 @@ int main(){
 			case 'e':
 				quit(&dataBase);break;
 			case 'f':
-                printList(&dataBase);system("pause");break;
+				printList(&dataBase);system("pause");break;
 			case 'q':
 				quit(&dataBase);exit(0);break;
 			default :
                 printf("Invalid Input\n");break;
 		}
-        ch=getchar();
+       ch=getchar();
     }
     return 0;        
 }
@@ -101,13 +103,9 @@ int addRecord(studentLink **head){
     if((*head)!=NULL){
         newStudentInfo=(studentLink *)malloc(sizeof(studentLink));
         if(newStudentInfo!=NULL){
-            printf("input student infomation:");
-            scanf("%s",newStudentInfo->stu.sno);
-            scanf("%s",newStudentInfo->stu.name);
-            scanf("%d",&(newStudentInfo->stu.sex));
-            scanf("%s",newStudentInfo->stu.birthday);
-            scanf("%s",newStudentInfo->stu.telephone);
-            newStudentInfo->next=(*head)->next;
+            printf("input student infomation:\n");
+			inputStudentInfo(&(newStudentInfo->stu));
+			newStudentInfo->next=(*head)->next;
             (*head)->next=newStudentInfo; 
             return TRUE;
         }
@@ -125,7 +123,34 @@ int deleteRecord(studentLink **head){
 }
 
 int selectRecord(studentLink **head){
-        
+	char ch='0';
+	char    sno_name[15]="sno";
+    char    name_name[15]="name";
+    char    sex_name[15]="sex";
+    char    birthday_name[15]="birthday";
+    char    telephone_name[15]="telephone";
+	char    tempSelectName[15]="";
+	printf ( "=============================\n" );
+	printf ( "1.sno\n" );
+	printf ( "2.name\n" );
+	printf ( "3.sex\n" );
+	printf ( "4.birthday\n" );
+	printf ( "5.telephone\n" );        
+	printf ( "\n=============================\n" );
+	scanf("%s",tempSelectName);
+	if(strcmp(tempSelectName,sno_name)==0){
+		printf("%s\n",sno_name);
+	}else if(strcmp(tempSelectName,name_name)){
+		
+	}else if(strcmp(tempSelectName,sex_name)){
+		
+	}else if(strcmp(tempSelectName,birthday_name)){
+		
+	}else if(strcmp(tempSelectName,telephone_name)){
+		
+	}
+	ch=getchar();
+	system("pause");
 }
 
 int quit(studentLink **head){
@@ -144,16 +169,30 @@ int printList(studentLink **head){
     if((p=*head)!=NULL)
 	while(p->next!=NULL){
         p=p->next;
-        printf("%s\n",p->stu.name);
+      //  printf("%s\n",p->stu.name);
+		printStudentInfo(p->stu);
     }
 
-    //当输入两条记录时，以下程序可以正确运行
-    /* 
-		printf("%s\n",p->stu.name);
-		p=p->next;
-		printf("%s\n",p->stu.name);
-		p=p->next;
-	*/
         
     return TRUE;
+}
+int printStudentInfo(studentInfo elem){
+	printf("sno:%s\n",elem.sno);
+	printf("name:%s\n",elem.name);
+	printf("sex:%d\n",elem.sex);
+	printf("birthday:%s\n",elem.birthday);
+	printf("telephone:%s\n",elem.telephone);
+}
+
+int inputStudentInfo(studentInfo *elem){
+	printf("sno:");
+	scanf("%s",elem->sno);
+	printf("name:");
+	scanf("%s",elem->name);
+	printf("sex:");
+	scanf("%d",&(elem->sex));
+	printf("birthday:");
+	scanf("%s",elem->birthday);
+	printf("telephone:");
+	scanf("%s",elem->telephone);
 }
