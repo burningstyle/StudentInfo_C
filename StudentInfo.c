@@ -49,7 +49,7 @@ int clear(studentLink **head);
 int printList(studentLink **head);
 //快捷对结构体进行赋值与输出
 int inputStudentInfo(studentInfo *elem);
-int printStudentInfo(studentInfo elem);
+int printStudentInfo(studentInfo *elem);
 //数据输出到文件
 int outputToFile(studentLink **head,FILE **f);
 
@@ -92,7 +92,7 @@ int main(){
 			case 'c':
 				deleteRecord(&dataBase,selectRecord(&dataBase));break;
 			case 'd':
-				printStudentInfo((selectRecord(&dataBase))->stu);break;
+				printStudentInfo(&(selectRecord(&dataBase))->stu);system("pause");break;
 			case 'e':
 				clear(&dataBase);break;
 			case 'f':
@@ -159,7 +159,6 @@ int deleteRecord(studentLink **head,studentLink *selectedInfo){
 
 //数据查询，并返回该记录的指针 
 studentLink *selectRecord(studentLink **head){
-    char    ch='0';
 	char    sno_name[15]="sno";
     char    name_name[15]="name";
     char    sex_name[15]="sex";
@@ -186,6 +185,7 @@ studentLink *selectRecord(studentLink **head){
 				return p;
 			}
         }
+        return NULL;
     }
 
 	else if(strcmp(tempSelectName,name_name)==0){
@@ -199,6 +199,7 @@ studentLink *selectRecord(studentLink **head){
 				return p;
 			}
         }
+        return NULL;
 	}
 	else if(strcmp(tempSelectName,sex_name)==0){
 		studentLink *p=NULL;
@@ -211,6 +212,7 @@ studentLink *selectRecord(studentLink **head){
 				return p;
 			}
         }
+        return NULL;
 	}
 	else if(strcmp(tempSelectName,birthday_name)==0){
 		studentLink *p=NULL;
@@ -223,6 +225,7 @@ studentLink *selectRecord(studentLink **head){
 				return p;
 			}
         }
+        return NULL;
 	}
 	else if(strcmp(tempSelectName,telephone_name)==0){
 		studentLink *p=NULL;
@@ -235,9 +238,8 @@ studentLink *selectRecord(studentLink **head){
 				return p;
 			}
         }
+        return NULL;
 	}
-	ch=getchar();
-	system("pause");
 }
 
 int clear(studentLink **head){
@@ -256,18 +258,20 @@ int printList(studentLink **head){
     if((p=*head)!=NULL)
 	while(p->next!=NULL){
         p=p->next;
-		printStudentInfo(p->stu);
+		printStudentInfo(&(p->stu));
     }
 
     return TRUE;
 }
-int printStudentInfo(studentInfo elem){
-	printf("sno:%s\n",elem.sno);
-	printf("name:%s\n",elem.name);
-	printf("sex:%d\n",elem.sex);
-	printf("birthday:%s\n",elem.birthday);
-	printf("telephone:%s\n",elem.telephone);
-	printf("\n");
+int printStudentInfo(studentInfo *elem){
+	if(elem){
+		printf("sno:%s\n",(*elem).sno);
+		printf("name:%s\n",(*elem).name);
+		printf("sex:%d\n",(*elem).sex);
+		printf("birthday:%s\n",(*elem).birthday);
+		printf("telephone:%s\n",(*elem).telephone);
+		printf("\n");
+	}
 }
 
 int inputStudentInfo(studentInfo *elem){
